@@ -1,0 +1,25 @@
+{
+  "name": "cqManage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ljc999999999/cqManage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ljc999999999/cqManage/issues"
+  },
+  "homepage": "https://github.com/ljc999999999/cqManage#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongodb": "^3.2.3",
+    "multer": "^1.4.1"
+  }
+}

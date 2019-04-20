@@ -1,0 +1,7 @@
+const express=require('express')
+const dbHelper=require('./02.抽取mongo')
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
+const app=express()
+app.use(express.static('views'))
+app.listen(8989)
