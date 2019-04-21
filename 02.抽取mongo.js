@@ -6,7 +6,7 @@ const ObjectId=require('mongodb').ObjectId;
 const dbName = "myproject";
 module.exports = {
   insertOne(collectionName, query, callback) {
-    MongoClient.connect(url, function(err, client) {
+    MongoClient.connect(url,{ useNewUrlParser: true }, function(err, client) {
       const db = client.db(dbName);
       // Get the documents collection
       const collection = db.collection(collectionName);
@@ -18,7 +18,7 @@ module.exports = {
     });
   },
   find(collectionName, query, callback) {
-    MongoClient.connect(url, (err, client)=> {
+    MongoClient.connect(url,{ useNewUrlParser: true }, (err, client)=> {
       const db = client.db(dbName);
       // Get the documents collection
       const collection = db.collection(collectionName);
@@ -30,7 +30,7 @@ module.exports = {
     });
   },
   updateOne(collectionName, query, update,callback) {
-    MongoClient.connect(url, (err, client)=> {
+    MongoClient.connect(url,{ useNewUrlParser: true }, (err, client)=> {
       const db = client.db(dbName);
       // Get the documents collection
       const collection = db.collection(collectionName);
@@ -44,7 +44,7 @@ module.exports = {
     });
   },
   deleteOne(collectionName, query,callback) {
-    MongoClient.connect(url, (err, client)=> {
+    MongoClient.connect(url,{ useNewUrlParser: true }, (err, client)=> {
       const db = client.db(dbName);
       // Get the documents collection
       const collection = db.collection(collectionName);

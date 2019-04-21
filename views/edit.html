@@ -30,6 +30,11 @@
       text-decoration: none;
       color: yellowgreen;
     }
+
+    .preview {
+      width: 100px;
+      height: 100px;
+    }
   </style>
 </head>
 
@@ -94,8 +99,10 @@
                 <label for="heroIcon" class="col-sm-2 control-label">头像</label>
                 <div class="col-sm-10">
                   <input required type="file" class="form-control" id="heroIcon" name="heroIcon" />
+                  <img src="" class="preview" alt="">
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <button type="submit" class="btn btn-default btn-save">保存</button>
@@ -121,7 +128,7 @@
   $(function () {
     const id = location.search.split('=')[1]
     // console.log(id);
-    let golbal = ""
+    
     $.ajax({
       url: '/heroDetail',
       data: {
@@ -132,32 +139,18 @@
         $('form #heroName').val(data.heroName)
         $('form #skillName').val(data.skillName)
         $('input[name=id]').val(data._id)
-
-        // //给file元素加change事件
-        
-        // golbal = data.heroIcon
-        
-        // $('#heroIcon').change(function () {
-
-        //   var url = URL.createObjectURL(this.files[0]);
-
-        //   golbal = url
-        //   console.log(golbal);
-
-
-        // });
-
-
-        // $('#heroIcon').change(function () {
-
-        //   var url = URL.createObjectURL(this.files[0]);
-
-        //  console.log(url);
-
-        // });
+        $('.preview').attr('src', data.heroIcon)
 
       }
     })
+    $('#heroIcon').change(function (e) {
+      console.log(e);
+      
+      const url = URL.createObjectURL(e.target.files[0]);
+
+      $('.preview').attr('src', url)
+
+    });
     $('.btn-save').on('click', function (e) {
       e.preventDefault();
       const fm = new FormData($('form')[0])

@@ -3,9 +3,11 @@ const dbHelper = require("./02.抽取mongo");
 const path=require('path')
 const multer  = require('multer')
 const upload = multer({ dest: 'views/imgs' })
+const bodyParser=require('body-parser')
 
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static("views"));
 app.get("/herolist", (req, res) => {
   // 获取query数据
@@ -88,32 +90,26 @@ app.post('/updatehero',upload.single('heroIcon'),(req,res)=>{
     const heroName=req.body.heroName;
     const skillName=req.body.skillName;
     console.log(req.file);
+    console.log(req.body);
     
     const id=req.body.id
+    let updateData={
+        heroName,
+        skillName
+    }
     if(req.file){
         const heroIcon=path.join('imgs',req.file.filename);
-        dbHelper.updateOne('cqlist',{_id:dbHelper.ObjectId(id)},{
-            heroIcon,
-            heroName,
-            skillName
-        },result=>{
-            res.send({
-                msg:'修改成功',
-                code:200
-            })
-        })
-    }else{
-        dbHelper.updateOne('cqlist',{_id:dbHelper.ObjectId(id)},{
-            // heroIcon,
-            heroName,
-            skillName
-        },result=>{
-            res.send({
-                msg:'修改成功',
-                code:200
-            })
-        })
+        updateData.heroIcon=heroIcon
+      
     }
+    dbHelper.updateOne('cqlist',{_id:dbHelper.ObjectId(id)},
+        updateData
+    ,result=>{
+        res.send({
+            msg:'修改成功',
+            code:200
+        })
+    })
  
 })
 app.get('/heroDelete',(req,res)=>{
@@ -124,5 +120,27 @@ app.get('/heroDelete',(req,res)=>{
             code:200
         })
     })
+})
+app.post('/register',(req,res)=>{
+    const username=req.body.username
+    console.log(username);
+    const password=req.body.password
+    console.log(password);
+    dbHelper.find('userlist',{username:req.body.username},result=>{
+        if(result.length===0){
+            dbHelper.insertOne('userlist',req.body,result=>{
+                res.send({
+                    msg:"账户注册成功",
+                    code:200
+                })
+            })
+        }else{
+            res.send({
+                msg:"账号已注册",
+                code:100
+            })
+        }
+    })
+    
 })
 app.listen(8989);

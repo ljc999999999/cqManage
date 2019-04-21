@@ -29,6 +29,10 @@
         text-decoration: none;
         color: yellowgreen;
       }
+      .preview{
+        width: 100px;
+        height: 100px;
+      }
     </style>
   </head>
 
@@ -118,6 +122,7 @@
                       id="heroIcon"
                       name="heroIcon"
                     />
+                    <img src="" class="preview" alt="">
                   </div>
                 </div>
                 <div class="form-group">
@@ -160,5 +165,13 @@ $(function(){
       }
     })
   })
+  $('#heroIcon').change(function (e) {
+      console.log(e);
+      
+      const url = URL.createObjectURL(e.target.files[0]);
+
+      $('.preview').attr('src', url)
+
+    });
 })
 </script>
