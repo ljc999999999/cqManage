@@ -71,24 +71,33 @@
 <script src="./lib/bootstrap/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="./lib/md5/md5.min.js"></script>
 <script>
   $(function () {
-    $('#userName').blur(function(){
-      const reg=/^[a-z0-9]+$/i;
-      const username=$(this).val()
-      if(!reg.test(username)){
+    $('#userName').blur(function () {
+      const reg = /^[a-z0-9]+$/i;
+      const username = $(this).val()
+      if (!reg.test(username)) {
         alert('账号不合法！')
       }
     })
     $('.register').click(function () {
+      const password = md5($('#userPass').val(), 'whsy')
+      console.log(password);
 
+      $('#userPass').val(password)
       $.ajax({
-        url:"/register",
-        data:$('form').serialize(),
-        type:'post',
-        success(data){
-          console.log(data);
-          
+        url: "/register",
+        data: $('form').serialize(),
+        type: 'post',
+        success(data) {
+          if (data.code == 200) {
+            alert('注册成功')
+            location = "login.html"
+          }else{
+            alert('账户已注册！')
+          }
+
         }
       })
     })
